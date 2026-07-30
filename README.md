@@ -201,6 +201,21 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
+### Snowflake Configuration
+
+Configure your own Snowflake environment before running the scripts.
+
+Example:
+
+```bash
+export SNOWFLAKE_ACCOUNT="your-account"
+export SNOWFLAKE_USER="your-user"
+export SNOWFLAKE_WAREHOUSE="COMPUTE_WH"
+export SNOWFLAKE_DATABASE="PORTFOLIO_DB"
+export SNOWFLAKE_SCHEMA="ANALYTICS"
+```
+
+The scripts will prompt for the Snowflake password at runtime.
 
 A Snowflake account and equivalent source dataset are required to execute the Snowflake portions of the pipeline.
 

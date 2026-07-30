@@ -1,15 +1,16 @@
+import os
 import getpass
 import snowflake.connector
 
 password = getpass.getpass("Snowflake password: ")
 
 conn = snowflake.connector.connect(
-    account="UZSDACD-JZ99935",
-    user="HANJRE",
+    account=os.getenv("SNOWFLAKE_ACCOUNT", "UZSDACD-JZ99935"),
+    user=os.getenv("SNOWFLAKE_USER", "HANJRE"),
     password=password,
-    warehouse="COMPUTE_WH",
-    database="PORTFOLIO_DB",
-    schema="ANALYTICS"
+    warehouse=os.getenv("SNOWFLAKE_WAREHOUSE", "COMPUTE_WH"),
+    database=os.getenv("SNOWFLAKE_DATABASE", "PORTFOLIO_DB"),
+    schema=os.getenv("SNOWFLAKE_SCHEMA", "ANALYTICS")
 )
 
 cur = conn.cursor()

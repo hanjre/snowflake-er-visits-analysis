@@ -7,7 +7,7 @@ This project analyzes annual U.S. emergency department visit trends using Snowfl
 
 The project demonstrates an end-to-end analytics workflow:
 
-Raw Data → Snowflake → Clean Analytics View → SQL Analysis → Python/Pandas → Visualization
+Raw Data → Snowflake RAW Layer → ANALYTICS View → SQL Analysis → Python/Pandas → Visualization
 
 ## Analytical Questions
 
@@ -95,6 +95,8 @@ Emergency department utilization changed substantially during the period analyze
 
 Python connects to Snowflake and retrieves the analytical dataset into Pandas.
 
+Connection management is centralized in config.py, allowing multiple scripts to reuse the same Snowflake connection configuration.
+
 The analysis script:
 
 1. connects to Snowflake
@@ -112,7 +114,10 @@ snowflake-er-visits-analysis/
 ├── README.md
 ├── analyze_er_visits.py
 ├── connect_test.py
+├── config.py
 ├── requirements.txt
+├── .env.example
+├── .gitignore
 ├── sql/
 │   ├── 01_setup.sql
 │   ├── 02_clean.sql
@@ -140,7 +145,7 @@ Performs the analytical queries and calculates year-over-year changes.
 
 Credentials are not committed to the repository.
 
-Snowflake passwords are requested interactively using Python's `getpass` module.
+Snowflake credentials are entered interactively using Python's getpass module. For MFA-enabled accounts, the current authenticator code is also requested at runtime.
 
 Local environment and credential-related files are excluded through `.gitignore`.
 
@@ -165,7 +170,7 @@ These practices are important because Snowflake compute consumption is based on 
 
 Initial Python connectivity using browser-based authentication produced a SAML identity-provider error.
 
-The connection workflow was changed to username/password authentication with the password entered securely at runtime.
+The connection workflow was updated to use username/password authentication with MFA. Credentials are entered securely at runtime instead of being stored in source code.
 
 ### Local Python Environment
 
@@ -215,7 +220,9 @@ export SNOWFLAKE_DATABASE="PORTFOLIO_DB"
 export SNOWFLAKE_SCHEMA="ANALYTICS"
 ```
 
-The scripts will prompt for the Snowflake password at runtime.
+A .env.example file is included to document the required environment variables.
+
+The scripts prompt for the Snowflake password at runtime. If your Snowflake account has multi-factor authentication (MFA) enabled, they will also prompt for the current 6-digit authenticator code.
 
 A Snowflake account and equivalent source dataset are required to execute the Snowflake portions of the pipeline.
 

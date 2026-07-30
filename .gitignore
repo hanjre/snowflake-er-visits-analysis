@@ -1,5 +1,16 @@
+# Virtual environment
 .venv/
+
+# Environment variables
 .env
-.DS_Store
+
+# Python cache
 __pycache__/
-*.pyc
+*.py[cod]
+*.egg-info/
+
+# macOS
+.DS_Store
+
+# VS Code
+.vscode/
